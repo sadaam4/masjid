@@ -6,7 +6,7 @@ var lastSalahDate;
 var azanStarted = false;
 var nextSalah = 0;
 var hijriAdjustment = localStorage["hijriAdjustment"];
-var fredagsSalah = localStorage["fredagsSalah"] || "13:00";
+var fredagsSalah = localStorage["fredagsSalah"] || "130:30";
 
 function drawTop() {
 	//  document.getElementById('top').style.fontSize= 40 *  window.innerWidth / standardWindowWidth+"px";
@@ -117,7 +117,7 @@ function drawTimeLeft() {
 
 //		if (!azanStarted) {
 //			c2d.fillStyle = "#3D3D30";
-//			if (isStillFridayPrayer) {
+//			if (!fredagsSalah) fredagsSalah = "13:"30; {
 //				c2d.fillText(' Fredagsbøn kl. ' + fredagsSalah + ' ' + ' صلاة الجمعة الساعة ', 425, 25);
 //			} else {
 //				c2d.fillText('Næste salah ' + nextSalahdanish
