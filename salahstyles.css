@@ -121,11 +121,11 @@ body {
     }
 
     marquee {
-        font-size: 1.5em;
+        font-size: clamp(1em, 1.5vw, 1.5em);
     }
 
     #top {
-        font-size: 1.2em;
+        font-size: clamp(1em, 2vw, 1.2em);
         padding: 5px 0;
     }
 
@@ -135,6 +135,32 @@ body {
     }
 
     .marquee {
-        font-size: 1.2em;
+        font-size: clamp(1em, 1.5vw, 1.2em);
+    }
+}
+
+@media (max-width: 480px) {
+    .salahClock {
+        max-width: 100%;
+        padding: 6px;
+    }
+
+    #top {
+        font-size: clamp(0.9em, 2vw, 1em);
+    }
+
+    .marquee {
+        font-size: clamp(0.9em, 1.5vw, 1em);
+    }
+
+    #ticker, #Danskticker, #staticText {
+        font-size: 0.9em;
+        padding: 6px;
+    }
+
+    .table1 {
+        width: 100%;
+        float: none;
+        margin-bottom: 10px;
     }
 }
