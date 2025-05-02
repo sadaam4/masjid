@@ -680,56 +680,58 @@
       return `${day}-${month}`;
     }
 
-    function updatePrayerTimes() {
-  
-  const now = new Date(); // توقيت الآن
-
+  function updatePrayerTimes() {
+  const now = new Date(); 
   const key = getTodayKey();
   const times = prayertimes[key];
   if (!times) return;
 
-  const today = new Date().getDay();
-  if (today === 5) { // 5 يعني يوم الجمعة
-    document.getElementById("nextPrayerLabel").textContent = "صلاة الجمعة : 13:30"; // ← تقدر تغير الوقت هنا
-    return; // نوقف تنفيذ باقي الكود ليوم الجمعة
+  let [fajr, shurooq, dhuhr, asr, maghrib, isha] = times.split(";");
+
+  const today = now.getDay(); // 5 = الجمعة
+
+  if (today === 5) {
+    dhuhr = "13:30"; // تعديل وقت الظهر ليكون وقت الجمعة
+    document.querySelector(".Dhuhr .time").innerText = dhuhr;
+    document.getElementById("nextPrayerLabel").textContent = "صلاة الجمعة : " + dhuhr;
+  } else {
+    document.querySelector(".Dhuhr .time").innerText = dhuhr;
   }
 
-  const [fajr, shurooq, dhuhr, asr, maghrib, isha] = times.split(";");
   document.querySelector(".Fajr .time").innerText = fajr;
   document.querySelector(".Shurooq .time").innerText = shurooq;
-document.querySelector(".Dhuhr .time").innerText = dhuhr;
-document.querySelector(".Asr .time").innerText = asr;
-document.querySelector(".Maghrib .time").innerText = maghrib;
-document.querySelector(".Isha .time").innerText = isha;
-
+  document.querySelector(".Asr .time").innerText = asr;
+  document.querySelector(".Maghrib .time").innerText = maghrib;
+  document.querySelector(".Isha .time").innerText = isha;
 
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
-  const prayerNamesDA = ["Fajr", "shurooq", "Dhuhr", "Asr", "Maghrib", "Isha"];
+  const prayerNamesDA = ["Fajr", "Shurooq", "Dhuhr", "Asr", "Maghrib", "Isha"];
   const prayerNames = ["الفجر", "الشروق", "الظهر", "العصر", "المغرب", "العشاء"];
   const prayerTimes = [fajr, shurooq, dhuhr, asr, maghrib, isha];
 
   for (let i = 0; i < prayerTimes.length; i++) {
-  const [h, m] = prayerTimes[i].split(":").map(Number);
-  const prayerMinutes = h * 60 + m;
-  const iqamaMinutes = prayerMinutes + 10;
+    const [h, m] = prayerTimes[i].split(":").map(Number);
+    const prayerMinutes = h * 60 + m;
+    const iqamaMinutes = prayerMinutes + 10; // زيادة 10 دقائق على الأذان
 
-  if (currentMinutes < iqamaMinutes) {
-    const iqamaH = Math.floor(iqamaMinutes / 60);
-    const iqamaM = iqamaMinutes % 60;
-    const iqamaTime = `${iqamaH.toString().padStart(2, '0')}:${iqamaM.toString().padStart(2, '0')}`;
+    if (currentMinutes < iqamaMinutes) {
+      const iqamaH = Math.floor(iqamaMinutes / 60);
+      const iqamaM = iqamaMinutes % 60;
+      const iqamaTime = `${iqamaH.toString().padStart(2, '0')}:${iqamaM.toString().padStart(2, '0')}`;
 
-    const iqamaTimeDisplay = document.getElementById("iqamaTimeDisplay");
-    
-    document.getElementById("nextPrayerLabel").textContent = `Næste Salah: ${prayerNamesDA[i]} ${prayerTimes[i]}`;
+      const iqamaTimeDisplay = document.getElementById("iqamaTimeDisplay");
+      
+      if (today === 5 && prayerNames[i] === "الظهر") {
+        document.getElementById("nextPrayerLabel").textContent = "صلاة الجمعة : " + dhuhr;
+      } else {
+        document.getElementById("nextPrayerLabel").textContent = `Næste Salah: ${prayerNamesDA[i]} ${prayerTimes[i]}`;
+      }
 
-
-
-    return;
+      return;
+    }
   }
-}
 
-
-  // في حال لم تدخل الحلقة (مثلاً بعد العشاء)
+  // بعد العشاء، الصلاة القادمة فجر
   document.querySelector(".next-prayer").innerText = `الصلاة القادمة: الفجر ${fajr}`;
 }
 
