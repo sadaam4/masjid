@@ -691,7 +691,7 @@
   const today = now.getDay(); // 5 = الجمعة
 
   if (today === 5) {
-    dhuhr = "13:30"; // تعديل وقت الظهر ليكون وقت الجمعة
+   // تعديل وقت الظهر ليكون وقت الجمعة
     document.querySelector(".Dhuhr .time").innerText = dhuhr;
     document.getElementById("nextPrayerLabel").textContent = "صلاة الجمعة : " + dhuhr;
   } else {
